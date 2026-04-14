@@ -1,0 +1,8 @@
+services:
+  sig-api-adapter:
+    build: .
+    restart: always
+    ports:
+      - "4313:4313"
+    env_file:
+      - .env

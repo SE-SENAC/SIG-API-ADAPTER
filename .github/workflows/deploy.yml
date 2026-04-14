@@ -1,0 +1,14 @@
+name: Deploy SIG API Adapter
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Executar deploy no servidor
+        run: bash /srv/sig-api-adapter/deploy.sh

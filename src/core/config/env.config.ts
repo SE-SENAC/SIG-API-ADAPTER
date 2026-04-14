@@ -1,8 +1,7 @@
 import * as dotenv from 'dotenv';
-import * as path from 'path';
 
 // Carrega as variáveis do .env na raiz do projeto
-dotenv.config({ path: path.join(__dirname, '../../../../.env') }); // Assume que irá rodar da pasta dist ou src, ajustar caso precise
+ // Assume que irá rodar da pasta dist ou src, ajustar caso precise
 // Na verdade, 'dotenv.config()' sem path pega do diretório atual de execução que é a raiz
 dotenv.config();
 

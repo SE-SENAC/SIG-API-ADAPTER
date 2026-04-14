@@ -8,7 +8,7 @@ import { ENV } from './core/config/env.config';
 
 import { errorHandlerMiddleware } from './core/exceptions/error-handler.middleware';
 import { healthRouter } from './modules/health/health.routes';
-import cors from 'cors';
+// import cors from 'cors';
 
 import { turmasRouter } from './modules/turmas/turmas.routes';
 import { matriculasRouter } from './modules/matriculas/matriculas.routes';
@@ -29,7 +29,7 @@ class App {
 
   private middlewares(): void {
     // Configuração inicial de CORS, restrito para uso interno (pode ajustar os origins futuramente)
-    this.express.use(cors());
+    // this.express.use(cors());
     this.express.use(express.json());
     this.express.use(express.urlencoded({ extended: true }));
   }
