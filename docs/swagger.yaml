@@ -1,0 +1,125 @@
+openapi: 3.0.0
+info:
+  title: SIG API Adapter (Orchestrator)
+  version: 1.0.0
+  description: |
+    API Orquestradora para o SIG Corporativo. Este serviço age como um Anti-Corruption Layer, mascarando Tokens e tratando respostas para o Front-end.
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Servidor de Desenvolvimento Local
+
+tags:
+  - name: Turmas
+    description: Operações relacionadas às Turmas
+  - name: Matrículas
+    description: Operações de Links de Matrículas e processos comerciais
+
+paths:
+  /turmas/lista-simples:
+    get:
+      tags:
+        - Turmas
+      summary: Pesquisar turmas
+      description: Retorna uma lista de turmas através de uma busca paginada filtrando apenas dados superficiais essenciais.
+      parameters:
+        - name: pagina
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: tamanhoDaPagina
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: codigoDoPlano
+          in: query
+          schema:
+            type: string
+        - name: unidadeOperativaId
+          in: query
+          schema:
+            type: integer
+        - name: localidadeDaTurmaId
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sucesso. Retorna matriz `PaginatedResult`.
+
+  /turmas/{id}:
+    get:
+      tags:
+        - Turmas
+      summary: Obter Turma Detalhada
+      description: |
+        Retorna as informações profundas e pedagógicas de uma turma selecionada por Id.
+        
+        **REGRAS DE NEGÓCIO (Enforced pelo Adapter)**:
+        - A Turma deve estar no `estadoDaTurma`: "Liberado Para Matrícula".
+        - O `preco` deve ser obrigatoriamente `> 0`.
+        - Pelo menos um recurso financeiro deve ser `Comercial`, `PSG` ou `DR`.
+        - A turma possui meios de pagamentos configurados para WEB.
+        
+        *Se o ID solicitado violar alguma das regras acima, a API orquestradora irá estourar erro HTTP 400 em vez de devolver os dados, protegendo o Front-End.*
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sucesso
+        '400':
+          description: Erro de Validação de Negócio. Indica que a turma existe, porém está Fechada ou Gratuita.
+
+  /matriculas/gerar-link:
+    post:
+      tags:
+        - Matrículas
+      summary: Gerar Link de Matrícula (Comercial)
+      description: |
+        Gera um Link parametrizado do SIG para redirecionamento do E-Commerce.
+        
+        **REGRAS DE NEGÓCIO**:
+        - O FrontEnd não precisa encaminhar a chave redundante `OrigemDoRecursoId`. Nosso adaptador clona automaticamente a chave `recursoFinanceiroId` para preencher os requisitos do SIG.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - cursos
+              properties:
+                cursos:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      unidadeOperativaId:
+                        type: integer
+                      turmaId:
+                        type: integer
+                      recursoFinanceiroId:
+                        type: integer
+                      numeroDeVagas:
+                        type: integer
+                      vouchersPromocionais:
+                        type: array
+                        items:
+                          type: string
+      responses:
+        '200':
+          description: Retorna a string do Link.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    example: "https://cloud.plataforma.senac.br/...&origemdorecurso=2&recursofinanceiroid=2"
