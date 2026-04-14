@@ -3,6 +3,6 @@ services:
     build: .
     restart: always
     ports:
-      - "4313:4313"
+      - "192.168.0.19:80:4313"
     env_file:
       - .env
