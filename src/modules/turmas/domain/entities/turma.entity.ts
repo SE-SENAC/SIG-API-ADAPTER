@@ -29,6 +29,9 @@ export class Turma {
     public vagasTotais: number,
     public vagasPreenchidas: number,
     public vagasDisponiveis: number,
+    public preco: number | null,
+    public eixoTecnologico: string | null,
+    public segmento: string | null,
     public recursosFinanceiros: RecursoFinanceiro[]
   ) {}
 }

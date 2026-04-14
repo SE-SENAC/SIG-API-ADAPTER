@@ -6,7 +6,7 @@ info:
     API Orquestradora para o SIG Corporativo. Este serviço age como um Anti-Corruption Layer, mascarando Tokens e tratando respostas para o Front-end.
 
 servers:
-  - url: http://localhost:3000/api/v1
+  - url: http://localhost:4313/api/v1
     description: Servidor de Desenvolvimento Local
 
 tags:
@@ -32,16 +32,76 @@ paths:
           in: query
           schema:
             type: integer
-            default: 10
+            default: 10000
         - name: codigoDoPlano
           in: query
+          description: "Obrigatório se usar SegmentoId."
           schema:
             type: string
         - name: unidadeOperativaId
           in: query
           schema:
             type: integer
+        - name: codigoDaTurma
+          in: query
+          schema:
+            type: string
+        - name: nomeTurma
+          in: query
+          schema:
+            type: string
+        - name: sigla
+          in: query
+          schema:
+            type: string
+        - name: divulgacaoOnline
+          in: query
+          schema:
+            type: boolean
+        - name: divulgacaoComMatriculaOnline
+          in: query
+          schema:
+            type: boolean
+        - name: dataPeriodoExecucaoInicial
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: dataPeriodoExecucaoFinal
+          in: query
+          schema:
+            type: string
+            format: date-time
         - name: localidadeDaTurmaId
+          in: query
+          schema:
+            type: integer
+        - name: segmentoId
+          in: query
+          description: "Ao usar SegmentoId, obrigatoriamente preencha codigoDoPlano"
+          schema:
+            type: integer
+        - name: nome
+          in: query
+          schema:
+            type: string
+        - name: descricao
+          in: query
+          schema:
+            type: string
+        - name: situacao
+          in: query
+          schema:
+            type: boolean
+        - name: regionalId
+          in: query
+          schema:
+            type: integer
+        - name: ordenarPor
+          in: query
+          schema:
+            type: string
+        - name: ordem
           in: query
           schema:
             type: integer

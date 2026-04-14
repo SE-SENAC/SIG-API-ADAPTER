@@ -26,12 +26,26 @@ export class TurmasController {
   public async getTurmas(req: Request, res: Response): Promise<void> {
     const filters = new GetTurmasFiltersDto(
       req.query.pagina ? Number(req.query.pagina) : 1,
-      req.query.tamanhoDaPagina ? Number(req.query.tamanhoDaPagina) : 10,
+      req.query.tamanhoDaPagina ? Number(req.query.tamanhoDaPagina) : 10000,
       req.query.codigoDoPlano as string,
       req.query.unidadeOperativaId ? Number(req.query.unidadeOperativaId) : undefined,
-      req.query.codigoDaTurmaFormatado as string,
-      req.query.localidadeDaTurmaId ? Number(req.query.localidadeDaTurmaId) : undefined
+      req.query.codigoDaTurma as string,
+      req.query.nomeTurma as string,
+      req.query.sigla as string,
+      req.query.divulgacaoOnline !== undefined ? String(req.query.divulgacaoOnline) === 'true' : undefined,
+      req.query.divulgacaoComMatriculaOnline !== undefined ? String(req.query.divulgacaoComMatriculaOnline) === 'true' : undefined,
+      req.query.dataPeriodoExecucaoInicial as string,
+      req.query.dataPeriodoExecucaoFinal as string,
+      req.query.localidadeDaTurmaId ? Number(req.query.localidadeDaTurmaId) : undefined,
+      req.query.segmentoId ? Number(req.query.segmentoId) : undefined,
+      req.query.nome as string,
+      req.query.descricao as string,
+      req.query.situacao !== undefined ? String(req.query.situacao) === 'true' : undefined,
+      req.query.regionalId ? Number(req.query.regionalId) : undefined,
+      req.query.ordenarPor as string,
+      req.query.ordem ? Number(req.query.ordem) : undefined
     );
+
 
     const result = await this.getTurmasUseCase.execute(filters);
     res.status(200).json(result);

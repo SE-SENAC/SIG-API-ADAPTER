@@ -37,7 +37,7 @@ export class SigTurmasGateway implements ITurmasGateway {
       }
     });
 
-    const endpoint = `/integracaoserver/api/turma/lista-simples?${queryParams.toString()}`;
+    const endpoint = `/integracaoserver/api/turma?${queryParams.toString()}`;
     
     const response: any = await this.httpClient.get(endpoint);
 
