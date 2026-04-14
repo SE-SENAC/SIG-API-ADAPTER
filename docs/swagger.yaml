@@ -6,7 +6,7 @@ info:
     API Orquestradora para o SIG Corporativo. Este serviço age como um Anti-Corruption Layer, mascarando Tokens e tratando respostas para o Front-end.
 
 servers:
-  - url: http://localhost:4313/api/v1
+  - url: http://sigapiadapter.se.senac.br:4313/api/v1
     description: Servidor de Desenvolvimento Local
 
 tags:
