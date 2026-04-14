@@ -3,7 +3,7 @@ name: Deploy SIG API Adapter
 on:
   push:
     branches:
-      - Production
+      - production
 
 jobs:
   deploy:

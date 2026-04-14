@@ -3,7 +3,7 @@
 set -e
 
 PROJECT_DIR="/srv/sig-api-adapter"
-BRANCH="Production"
+BRANCH="production"
 
 echo "[$(date)] Iniciando deploy..." >> "$PROJECT_DIR/deploy.log"
 
